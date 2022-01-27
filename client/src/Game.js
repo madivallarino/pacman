@@ -1,6 +1,7 @@
 import React from 'react';
 import GameArena from './GameArena';
 import PlayerCanvas from './PlayerCanvas';
+import GameBoard from './GameBoard'
 const Game = () => {
    
 
@@ -9,6 +10,7 @@ const Game = () => {
         <div>
             <GameArena />
             <PlayerCanvas />
+            <GameBoard />
         </div>
     )
 }

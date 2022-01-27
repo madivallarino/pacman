@@ -7,9 +7,7 @@
   pointer-events: none;
 }
 
-#canvas{
-  background-color: blue;
-} 
+
 
 
 @media (prefers-reduced-motion: no-preference) {
