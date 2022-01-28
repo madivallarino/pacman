@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import pac1 from './pac1.png'
 
-const PlayerCanvas = () => {
+const PlayerCanvas = ({wallRef}) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const pacmanRef = useRef(null)
     const movingRef = useRef('')
-   
+   console.log(wallRef.current)
    
 
     const SCREEN_WIDTH = window.innerWidth
@@ -47,9 +47,11 @@ const PlayerCanvas = () => {
 
 function update(){
     contextRef.current.clearRect(0 , 0, canvasRef.current.width, canvasRef.current.height);
+    boundaryWall()
     drawImage()
     handleDirection()
-    requestAnimationFrame(update)
+    // requestAnimationFrame(update)
+   
 }
 
 function drawImage(){
@@ -125,6 +127,17 @@ function moveUpwards(){
     pacmanx.y -= pacmanx.dy
 }
 
+function boundaryWall(){
+   let i = 1;
+   for(let key in wallRef.current){
+       console.log(wallRef.current)
+       if(key === `x${i}`){
+           console.log('found it')
+       }
+       console.log(wallRef.current[key])
+       console.log(key)
+   }
+}
 
 
     return (
