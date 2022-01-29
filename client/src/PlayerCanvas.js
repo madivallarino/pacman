@@ -18,8 +18,8 @@ const PlayerCanvas = ({wallRef}) => {
         y: 50, 
         sizeWidth: (SCREEN_WIDTH / 10),
         sizeHeight: (SCREEN_HEIGHT / 10),
-        dx: 10,
-        dy: 10,
+        dx: 5,
+        dy: 5,
     }
 
     pacmanRef.current = pacmanx
@@ -47,10 +47,15 @@ const PlayerCanvas = ({wallRef}) => {
 
 function update(){
     contextRef.current.clearRect(0 , 0, canvasRef.current.width, canvasRef.current.height);
-    boundaryWall()
+    // boundaryLeftWall()
+    // boundaryTopWall()
+    
+        // boundaryRightWall()
+        // boundaryBottomWall()
     drawImage()
     handleDirection()
-    // requestAnimationFrame(update)
+    // boundaries()
+    requestAnimationFrame(update)
    
 }
 
@@ -81,64 +86,127 @@ function drawImage(){
 
  function handleDirection(){
      if(movingRef.current === 'right'){
+       
          moveRight();
+        boundaryLeftWall();
      } 
      if(movingRef.current === 'left'){
          moveLeft();
+         
      } 
      if(movingRef.current === 'up'){
          moveUpwards();
+        
      }
      if(movingRef.current === 'down'){
          moveDownwards();
+        
      }
  }
  //the one w/o movign between sides 
  function moveLeft(){
-    if( pacmanx.x < 0){
-        return
-    }
+   
     
     pacmanx.x -= pacmanx.dx
 }
 
+// function boundaries(){
+//     boundaryTopWall()
+//     boundaryBottomWall()
+//     boundaryLeftWall()
+//     boundaryRightWall()
+// }
 //the one w/o moving between sides
 function moveRight(){
-    if( pacmanRef.current.x > (SCREEN_WIDTH - pacmanRef.current.sizeWidth) ){
-        return
-    }
+    
+    
     pacmanRef.current.x += pacmanRef.current.dx
 }
 
 //the one w/o moving between sides
 function moveDownwards(){
-    if(pacmanx.y > (SCREEN_HEIGHT - pacmanRef.current.sizeHeight) ){
-        return
-    }
+    
+    
     pacmanx.y += pacmanx.dy
 }
 
 //the one w/o moving between sides 
 function moveUpwards(){
-    if(pacmanx.y < 0){
-        return
-    }
     
     pacmanx.y -= pacmanx.dy
 }
 
-function boundaryWall(){
+function boundaryLeftWall(){
    let i = 1;
    for(let key in wallRef.current){
-       console.log(wallRef.current)
-       if(key === `x${i}`){
-           console.log('found it')
-       }
-       console.log(wallRef.current[key])
-       console.log(key)
+      if(`x${i}` in wallRef.current){
+        //   console.log(wallRef.current[`x${i}`])
+        //  console.log(pacmanRef.current.x+pacmanRef.current.sizeWidth)
+         if((pacmanRef.current.x + pacmanRef.current.sizeWidth) < (wallRef.current[`x${i}`])){
+             console.log('not a wall')
+         }
+         else {
+            pacmanRef.current.x = wallRef.current[`x${i}`] - pacmanRef.current.sizeWidth
+         }
+      }
+      i++
    }
 }
 
+function boundaryRightWall(){
+    let i = 1;
+    for(let key in wallRef.current){
+       if(`x${i}` in wallRef.current){
+         //   console.log(wallRef.current[`x${i}`])
+         //  console.log(pacmanRef.current.x+pacmanRef.current.sizeWidth)
+         
+          if((pacmanRef.current.x ) > (wallRef.current[`x${i}`] + wallRef.current['width'])){
+              console.log('not a wall')
+          }
+          else {
+            pacmanRef.current.x = wallRef.current[`x${i}`] + wallRef.current['width']
+          }
+       }
+       i++
+    }
+}
+
+function boundaryTopWall(){
+    let i = 1;
+    for(let key in wallRef.current){
+       if(`y${i}` in wallRef.current){
+         //   console.log(wallRef.current[`x${i}`])
+         //  console.log(pacmanRef.current.x+pacmanRef.current.sizeWidth)
+         
+          if((pacmanRef.current.y + pacmanRef.current.sizeHeight) < (wallRef.current[`y${i}`])){
+              console.log('not a wall')
+          }
+          else {
+              pacmanRef.current.y = wallRef.current[`y${i}`] - pacmanRef.current.sizeHeight
+          }
+       }
+       i++
+    }
+}
+
+
+function boundaryBottomWall(){
+    let i = 1;
+    for(let key in wallRef.current){
+       if(`y${i}` in wallRef.current){
+         //   console.log(wallRef.current[`x${i}`])
+         //  console.log(pacmanRef.current.x+pacmanRef.current.sizeWidth)
+         
+          if((pacmanRef.current.y) > (wallRef.current[`y${i}`] + wallRef.current['height'])){
+              console.log('not a wall')
+          }
+          else {
+              pacmanRef.current.y = wallRef.current[`y${i}`] + wallRef.current['height']
+          }
+       }
+       i++
+    }
+}
 
     return (
         <div>
