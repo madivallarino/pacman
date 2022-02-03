@@ -31,7 +31,7 @@ const GameArena = () => {
         <div>
         <canvas id="canvas"
         ref={canvasRef}
-        tabIndex={0}
+       
       />
         </div>
     )

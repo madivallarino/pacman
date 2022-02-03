@@ -1,8 +1,8 @@
 
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 
-const GameBoard = ({ wallRef }) => {
+const GameBoard = ({ wallRef, notAWallRef }) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
 
@@ -13,13 +13,13 @@ const GameBoard = ({ wallRef }) => {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth * 2;
         canvas.height = window.innerHeight * 2;
-        canvas.style.width = `${window.innerWidth*(8/20)}px`;
+        canvas.style.width = `${SCREEN_WIDTH*(8/20)}px`;
        
-        canvas.style.height = `${window.innerHeight*(13/20)}px`;
+        canvas.style.height = `${SCREEN_HEIGHT*(13/20)}px`;
         canvas.style.position = "absolute"
-        canvas.style.left = `${window.innerWidth*(6/20)}px`
-        canvas.style.top = `${window.innerHeight*(3/20)}px`
-        canvas.style['z.index'] = 5;
+        canvas.style.left = `${SCREEN_WIDTH*(6/20)}px`
+        canvas.style.top = `${SCREEN_HEIGHT*(3/20)}px`
+        canvas.style['z.index'] = 3;
         const context = canvas.getContext("2d");
         context.scale(2,2)
         contextRef.current = context;
@@ -27,39 +27,59 @@ const GameBoard = ({ wallRef }) => {
         update();
       },[])
 
+      // const gameArea = [
+      //   [1,1,1,1,1],
+      //   [1,0,0,0,1],
+      //   [1,0,1,0,1],
+      //   [1,0,0,0,1],
+      //   [1,1,1,1,1],
+      //           ]
+
       const gameArea = [
-          [0,0,0,0],
-          [0,0,1,0],
-          [0,0,1,0],
-          [0,0,0,0]
-                  ]
+        [0, 0], 
+        [1, 0]
+      ]
 
-
-      
-      
+const gameBoardHeight = gameArea.length
+const gameBoardWidth = gameArea[0].length
+   
+    
       function update(){
           makeTheBoard(gameArea)
 
       }
 
-      function drawRect(x, y, color, counter){  
-        if(!counter){
-          contextRef.current.beginPath();
-          contextRef.current.rect(x, y, (SCREEN_WIDTH*(5/20)), (SCREEN_HEIGHT*(5/20)));;
-          contextRef.current.fillStyle = color;
-           contextRef.current.fill();
-        }
-        if(counter){
-          contextRef.current.beginPath();
-          contextRef.current.rect(x, y, (SCREEN_WIDTH*(5/20)), (SCREEN_HEIGHT*(5/20)));;
-          contextRef.current.fillStyle = color;
-           contextRef.current.fill();
-           wallRef.current[`x${counter}`] = x;
-           wallRef.current[`y${counter}`] = y;
-           
-        }
+      // function drawRect(x, y, color,wallCounter ){
+         
+      //   if(!counter){
+      //     contextRef.current.beginPath();
+      //     contextRef.current.rect(x, y, (SCREEN_WIDTH/(gameBoardWidth)), (SCREEN_HEIGHT/(gameBoardHeight)));;
+      //     contextRef.current.fillStyle = color;
+      //      contextRef.current.fill();
+      //      notAWallRef.current[`ball${ballCounter}`] = {}
+      //      notAWallRef.current[`ball${ballCounter}`].x = x;
+      //      notAWallRef.current[`ball${ballCounter}`].y = y;
+      //      notAWallRef.current[`ball${ballCounter}`].color = color;
+      //      notAWallRef.current[`ball${ballCounter}`].height = SCREEN_HEIGHT/(gameBoardHeight);
+      //      notAWallRef.current[`ball${ballCounter}`].width = SCREEN_WIDTH/(gameBoardWidth);
+      //      console.log(notAWallRef)
+      //   }
+      //   if(counter){
+      //     contextRef.current.beginPath();
+      //     contextRef.current.rect(x, y, (SCREEN_WIDTH/(gameBoardWidth)), (SCREEN_HEIGHT/(gameBoardHeight)));;
+      //     contextRef.current.fillStyle = color;
+      //      contextRef.current.fill();
+      //      wallRef.current[`wall${counter}`] = {}
+      //      wallRef.current[`wall${counter}`].x = x;
+      //      wallRef.current[`wall${counter}`].y = y;
+      //      wallRef.current[`wall${counter}`].color = color;
+      //      wallRef.current[`wall${counter}`].height = SCREEN_HEIGHT/(gameBoardHeight);
+      //      wallRef.current[`wall${counter}`].width = SCREEN_WIDTH/(gameBoardWidth);
+      //     console.log(wallRef)
+      //   }
        
-      }
+      // }
+      
 
     // function makesBoard(array){
     //     let num = array.length
@@ -76,23 +96,57 @@ const GameBoard = ({ wallRef }) => {
 
     function makeTheBoard(arrofarr){
     let wallCounter = 0;
-    wallRef.current.width = SCREEN_WIDTH*(5/20);
-    wallRef.current.height = SCREEN_HEIGHT*(5/20);
+    let ballCounter = 0;
+
     for(let arr in arrofarr){
         let yStartPosition = (parseInt(arr) / arrofarr.length) * SCREEN_HEIGHT
-            
+        
         for(let num in arrofarr[arr]){ 
             let xStartPosition  = (parseInt(num) / arrofarr[arr].length) * SCREEN_WIDTH
             if(parseInt(arrofarr[arr][num]) === 0){
-               drawRect(xStartPosition, yStartPosition, "green")
+              ballCounter += 1
+               drawGreenSide(xStartPosition, yStartPosition, "green", ballCounter)
+              
              } else if (parseInt(arrofarr[arr][num]) === 1){
                 wallCounter += 1
-               drawRect(xStartPosition, yStartPosition, "blue", wallCounter)
+               drawBlueSide(xStartPosition, yStartPosition, "blue", wallCounter)
           }
         }
       }
     }
 
+
+    function drawGreenSide(x, y, color, counter){
+        contextRef.current.beginPath();
+        contextRef.current.rect(x, y, (SCREEN_WIDTH/(gameBoardWidth)), (SCREEN_HEIGHT/(gameBoardHeight)));;
+        contextRef.current.fillStyle = color;
+         contextRef.current.fill();
+         notAWallRef.current[`ball${counter}`] = {}
+         notAWallRef.current[`ball${counter}`].x = x;
+         notAWallRef.current[`ball${counter}`].y = y;
+         notAWallRef.current[`ball${counter}`].color = color;
+         notAWallRef.current[`ball${counter}`].height = SCREEN_HEIGHT/(gameBoardHeight);
+         notAWallRef.current[`ball${counter}`].width = SCREEN_WIDTH/(gameBoardWidth);
+         console.log(notAWallRef)
+      
+    }
+
+
+    function drawBlueSide(x, y, color,counter){
+      
+        contextRef.current.beginPath();
+        contextRef.current.rect(x, y, (SCREEN_WIDTH/(gameBoardWidth)), (SCREEN_HEIGHT/(gameBoardHeight)));;
+        contextRef.current.fillStyle = color;
+         contextRef.current.fill();
+         wallRef.current[`wall${counter}`] = {}
+         wallRef.current[`wall${counter}`].x = x;
+         wallRef.current[`wall${counter}`].y = y;
+         wallRef.current[`wall${counter}`].color = color;
+         wallRef.current[`wall${counter}`].height = SCREEN_HEIGHT/(gameBoardHeight);
+         wallRef.current[`wall${counter}`].width = SCREEN_WIDTH/(gameBoardWidth);
+        console.log(wallRef)
+      
+    }
    
 
     return (
