@@ -3,10 +3,11 @@ import React, { useEffect, useState, useRef} from 'react';
 const Dots = ({ wallRef, notAWallRef, pacmanRef }) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
-
+    const whiteBlocks = useRef({})
+    const currentWhiteBlocks = useRef({})
     const SCREEN_WIDTH = window.innerWidth
     const SCREEN_HEIGHT = window.innerHeight
-    
+    const arrayOfWhiteXY = useRef([])
     useEffect(()=> {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth * 2;
@@ -36,7 +37,8 @@ const Dots = ({ wallRef, notAWallRef, pacmanRef }) => {
     
       function update(){
         //   makeTheDots()
-          handleBallBoundaries(pacmanRef, notAWallRef)
+          handleBallBoundaries(pacmanRef, notAWallRef, whiteBlocks, currentWhiteBlocks)
+          requestAnimationFrame(update)
       }
 
     
@@ -95,7 +97,8 @@ const Dots = ({ wallRef, notAWallRef, pacmanRef }) => {
       
     // }
    
-function handleBallBoundaries(objRef, objRef2){
+
+function handleBallBoundaries(objRef, objRef2, objRef3, objRef4){
     
     for(let key in objRef2.current){
        if
@@ -108,15 +111,40 @@ function handleBallBoundaries(objRef, objRef2){
     objRef.current.x < objRef2.current[key].x + objRef2.current[key].width 
         
        ){ 
+        
         contextRef.current.beginPath();
-        contextRef.current.rect(objRef2.current[key].x, objRef2.current[key].y, (SCREEN_WIDTH/(objRef2.current[key].width)), (SCREEN_HEIGHT/(objRef2.current[key].height)));;
+        contextRef.current.rect(objRef2.current[key].x, objRef2.current[key].y, (objRef2.current[key].width), (objRef2.current[key].height));;
         contextRef.current.fillStyle = "white";
          contextRef.current.fill();
 
+         makeWhiteBlockHash(objRef2.current[key].x,objRef2.current[key].y, arrayOfWhiteXY)
+
+        if((Object.keys(objRef2.current).length) === arrayOfWhiteXY.current.length){
+          console.log('this is the game')
+        }
+        
        }
     }
     
 }
+
+
+function makeWhiteBlockHash(x, y, arrayXY){
+ 
+  if(arrayXY.current.length === 0){
+    return arrayXY.current.push([x,y])
+  }
+    for(let key of arrayXY.current){
+      if(key[0]=== x && key[1] === y){
+        return true
+      } 
+    
+    }
+      return arrayXY.current.push([x,y])
+    
+}
+
+
 
 
 

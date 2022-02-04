@@ -27,18 +27,18 @@ const GameBoard = ({ wallRef, notAWallRef }) => {
         update();
       },[])
 
-      // const gameArea = [
-      //   [1,1,1,1,1],
-      //   [1,0,0,0,1],
-      //   [1,0,1,0,1],
-      //   [1,0,0,0,1],
-      //   [1,1,1,1,1],
-      //           ]
-
       const gameArea = [
-        [0, 0], 
-        [1, 0]
-      ]
+        [1,1,1,1,1],
+        [1,0,0,0,1],
+        [1,0,1,0,1],
+        [1,0,0,0,1],
+        [1,1,1,1,1],
+                ]
+
+      // const gameArea = [
+      //   [0, 0], 
+      //   [1, 0]
+      // ]
 
 const gameBoardHeight = gameArea.length
 const gameBoardWidth = gameArea[0].length
@@ -144,7 +144,6 @@ const gameBoardWidth = gameArea[0].length
          wallRef.current[`wall${counter}`].color = color;
          wallRef.current[`wall${counter}`].height = SCREEN_HEIGHT/(gameBoardHeight);
          wallRef.current[`wall${counter}`].width = SCREEN_WIDTH/(gameBoardWidth);
-        console.log(wallRef)
       
     }
    

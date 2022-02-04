@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import GameBoard from './GameBoard';
 import ghost from './ghost.png'
 
-const GhostCanvas = ({wallRef}) => {
+const GhostCanvas = ({wallRef, pacmanRef, livesCounter}) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const movingRef = useRef('down')
@@ -58,11 +58,47 @@ function update(){
     contextRef.current.clearRect(0 , 0, canvasRef.current.width, canvasRef.current.height);
     
     drawImage()
+
+    // pacmanAndGhostPosition(ghostRef, pacmanRef)
     // handleDirection(ghostRef)
     // handleBoundaries(ghostRef)
+    
     requestAnimationFrame(update)
    
 }
+
+
+function pacmanAndGhostPosition(objRef, objRef2){
+    
+    {
+       if
+    (objRef.current.y + objRef.current.sizeHeight > objRef2.current.y 
+     &&
+     objRef.current.y < objRef2.current.sizeHeight + objRef2.current.y   
+    && 
+    objRef.current.x + objRef.current.sizeWidth > objRef2.current.x
+    && 
+    objRef.current.x < objRef2.current.x + objRef2.current.sizeWidth 
+        
+       ){ 
+        livesCounter.current -= 1
+        pacmanRef.current.x = SCREEN_WIDTH * (5/20)
+        pacmanRef.current.y = SCREEN_HEIGHT * (5/20)
+        
+        if(livesCounter.current === 0){
+            console.log('game over')
+        }
+        // console.log('what a butt') 
+        // contextRef.current.beginPath();
+        // contextRef.current.rect(objRef2.current[key].x, objRef2.current[key].y, (objRef2.current[key].width), (objRef2.current[key].height));;
+        // contextRef.current.fillStyle = "white";
+        //  contextRef.current.fill();
+
+       }
+    }
+    
+}
+
 
 
 

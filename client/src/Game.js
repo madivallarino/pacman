@@ -9,7 +9,7 @@ const Game = () => {
     const wallRef = useRef({})
     const notAWallRef = useRef({})
     const pacmanRef = useRef()
-    
+    const livesCounter = useRef(5)
    
     return (
         <div>
@@ -18,7 +18,11 @@ const Game = () => {
             notAWallRef={notAWallRef}
             />
             <Dots wallRef={wallRef} notAWallRef={notAWallRef} pacmanRef={pacmanRef}/> 
-            <GhostCanvas wallRef={wallRef}/>
+            <GhostCanvas 
+            wallRef={wallRef} 
+            pacmanRef={pacmanRef}
+            livesCounter={livesCounter}
+            />
             <PlayerCanvas wallRef={wallRef} 
             notAWallRef={notAWallRef}
             pacmanRef={pacmanRef}/>
