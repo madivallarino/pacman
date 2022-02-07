@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import GameBoard from './GameBoard';
 import pac1 from './pac1.png'
 
-const PlayerCanvas = ({wallRef, pacmanRef, notAWallRef }) => {
+const PlayerCanvas = ({wallRef, pacmanRef, rectangleWidth, rectangleHeight }) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const movingRef = useRef('')
@@ -15,9 +15,9 @@ const PlayerCanvas = ({wallRef, pacmanRef, notAWallRef }) => {
 
     const pacmanx = {
         x: SCREEN_WIDTH * (5/20),
-        y: SCREEN_HEIGHT * (5/20), 
-        sizeWidth: (SCREEN_WIDTH / 10),
-        sizeHeight: (SCREEN_HEIGHT / 10),
+        y: SCREEN_HEIGHT * (3/20), 
+        sizeWidth: (rectangleWidth * (8/20)),
+        sizeHeight: (rectangleHeight * (8/20)) ,
         speed: 5,
         dx: 0,
         dy: 0,
@@ -162,6 +162,7 @@ function handleWallBoundaries(objRef, objRef2){
         {
                
         } else {
+            
             boundaries(objRef)
         }
         

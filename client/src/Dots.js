@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef} from 'react';
+import yellowDot from './yellowDot.png'
 
 const Dots = ({ wallRef, notAWallRef, pacmanRef }) => {
     const canvasRef = useRef(null)
@@ -8,6 +9,9 @@ const Dots = ({ wallRef, notAWallRef, pacmanRef }) => {
     const SCREEN_WIDTH = window.innerWidth
     const SCREEN_HEIGHT = window.innerHeight
     const arrayOfWhiteXY = useRef([])
+
+
+
     useEffect(()=> {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth * 2;
@@ -118,16 +122,31 @@ function handleBallBoundaries(objRef, objRef2, objRef3, objRef4){
          contextRef.current.fill();
 
          makeWhiteBlockHash(objRef2.current[key].x,objRef2.current[key].y, arrayOfWhiteXY)
-
-        if((Object.keys(objRef2.current).length) === arrayOfWhiteXY.current.length){
-          console.log('this is the game')
-        }
+        speedBallChecker(objRef2.current[key])
+         winGame(objRef2)
         
        }
     }
     
 }
 
+function speedBallChecker(objRef){
+  if(objRef.color === 'pink'){
+    console.log('speedball')
+    pacmanRef.current.speed = 10
+    objRef.color = 'white'
+    setTimeout(()=> {
+      pacmanRef.current.speed = 5
+    }, 5000)
+  }
+}
+
+
+function winGame(objRef2){
+  if((Object.keys(objRef2.current).length) === arrayOfWhiteXY.current.length){
+         
+  }
+}
 
 function makeWhiteBlockHash(x, y, arrayXY){
  

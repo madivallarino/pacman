@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef} from 'react';
 
-const GameBoard = ({ wallRef, notAWallRef }) => {
+const GameBoard = ({ wallRef, notAWallRef, gameBoardHeight, gameBoardWidth, gameArea}) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
 
@@ -27,26 +27,12 @@ const GameBoard = ({ wallRef, notAWallRef }) => {
         update();
       },[])
 
-      const gameArea = [
-        [1,1,1,1,1],
-        [1,0,0,0,1],
-        [1,0,1,0,1],
-        [1,0,0,0,1],
-        [1,1,1,1,1],
-                ]
-
-      // const gameArea = [
-      //   [0, 0], 
-      //   [1, 0]
-      // ]
-
-const gameBoardHeight = gameArea.length
-const gameBoardWidth = gameArea[0].length
+     
    
     
       function update(){
           makeTheBoard(gameArea)
-
+          
       }
 
       // function drawRect(x, y, color,wallCounter ){
@@ -105,15 +91,22 @@ const gameBoardWidth = gameArea[0].length
             let xStartPosition  = (parseInt(num) / arrofarr[arr].length) * SCREEN_WIDTH
             if(parseInt(arrofarr[arr][num]) === 0){
               ballCounter += 1
-               drawGreenSide(xStartPosition, yStartPosition, "green", ballCounter)
+               drawGreenSide(xStartPosition, yStartPosition, "yellow", ballCounter)
               
              } else if (parseInt(arrofarr[arr][num]) === 1){
                 wallCounter += 1
-               drawBlueSide(xStartPosition, yStartPosition, "blue", wallCounter)
+               drawBlueSide(xStartPosition, yStartPosition, "black", wallCounter)
           }
-        }
+          else if (parseInt(arrofarr[arr][num]) === 2){
+            ballCounter += 1
+           drawGreenSide(xStartPosition, yStartPosition, "pink", ballCounter)
+      }
+        } 
       }
     }
+
+
+
 
 
     function drawGreenSide(x, y, color, counter){
@@ -127,7 +120,7 @@ const gameBoardWidth = gameArea[0].length
          notAWallRef.current[`ball${counter}`].color = color;
          notAWallRef.current[`ball${counter}`].height = SCREEN_HEIGHT/(gameBoardHeight);
          notAWallRef.current[`ball${counter}`].width = SCREEN_WIDTH/(gameBoardWidth);
-         console.log(notAWallRef)
+       
       
     }
 
@@ -150,6 +143,7 @@ const gameBoardWidth = gameArea[0].length
 
     return (
         <div>
+       
         <canvas id="canvas"
         ref={canvasRef}
        

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState } from 'react';
 import Game from './Game'
 import { Switch, Route } from "react-router-dom";
 import './App.css';
 
 function App() {
 
-
+  const [lifeLost, setLifeLost ] = useState(false)
 
 
 
@@ -14,7 +14,7 @@ function App() {
     <div className="App">
    
     
-    <Game />
+    <Game lifeLost={lifeLost} setLifeLost={setLifeLost}/>
  
     
    

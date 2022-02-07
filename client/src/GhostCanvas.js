@@ -1,37 +1,57 @@
 import React, { useEffect, useState, useRef } from 'react';
 import GameBoard from './GameBoard';
-import ghost from './ghost.png'
+import alltheGhosts  from './Ghost';
+import ghostpic from './ghost.png'
+import Ghost from './Ghost';
 
-const GhostCanvas = ({wallRef, pacmanRef, livesCounter}) => {
+const GhostCanvas = ({wallRef, pacmanRef, livesCounter, ghostEatAbility, rectangleHeight, rectangleWidth, lifeLost, setLifeLost}) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const movingRef = useRef('down')
     const ghostRef = useRef('')
-//    console.log(wallRef.current)
-   
-
     const SCREEN_WIDTH = window.innerWidth
     const SCREEN_HEIGHT = window.innerHeight
     const directionalArray = ["up", "down", "left", "right"]
 
-   function getRandomInt(max){
-       return Math.floor(Math.random() * max)
-   }
-    
     
     const ghostx = {
         x: SCREEN_WIDTH * (13/20),
         y: SCREEN_HEIGHT * (5/20), 
-        sizeWidth: (SCREEN_WIDTH / 10),
-        sizeHeight: (SCREEN_HEIGHT / 10),
+        sizeWidth: (rectangleWidth * (8/20)),
+        sizeHeight: (rectangleHeight * (8/20)),
         speed: 5,
         dx: 0,
         dy: 0,
     }
 
-   
-    ghostRef.current = ghostx
+    const ghost = new Ghost (SCREEN_WIDTH * (11/20),  SCREEN_HEIGHT * (7/20), (rectangleWidth * (8/20)),(rectangleHeight * (8/20)),5, 0, 0 )
 
+    const ghost2 = new Ghost(SCREEN_WIDTH * (14/20),  SCREEN_HEIGHT * (3/20), (rectangleWidth * (8/20)),(rectangleHeight * (8/20)), 5, 0, 0 )
+    
+    const ghost3 = new Ghost(SCREEN_WIDTH * (5/20),  SCREEN_HEIGHT * (16/20),(rectangleWidth * (8/20)),(rectangleHeight * (8/20)), 5, 0, 0 )
+    
+    const ghost4 = new Ghost(SCREEN_WIDTH * (16/20),  SCREEN_HEIGHT * (16/20), (rectangleWidth * (8/20)),(rectangleHeight * (8/20)),5, 0, 0 )
+
+
+const alltheGhosts = [ghost, ghost2, ghost3, ghost4]
+
+alltheGhosts.map((ghost)=> ghostRef.current = ghost)
+
+
+
+
+    function handleAllTheGhosts(){
+        alltheGhosts.map((ghost)=> {
+            ghostRef.current = ghost;
+            drawImage()
+            pacmanAndGhost(pacmanRef, ghostRef)
+            handleDirection(ghostRef)
+            handleBoundaries(ghostRef)
+           
+        })
+    }
+
+    
 
     useEffect(()=> {
         const canvas = canvasRef.current;
@@ -57,21 +77,21 @@ const GhostCanvas = ({wallRef, pacmanRef, livesCounter}) => {
 function update(){
     contextRef.current.clearRect(0 , 0, canvasRef.current.width, canvasRef.current.height);
     
-    drawImage()
+    
 
-    // pacmanAndGhostPosition(ghostRef, pacmanRef)
+    handleAllTheGhosts()
+    // pacmanAndGhost(pacmanRef, ghostRef)
     // handleDirection(ghostRef)
     // handleBoundaries(ghostRef)
+    // drawImage()
     
     requestAnimationFrame(update)
    
 }
 
 
-function pacmanAndGhostPosition(objRef, objRef2){
-    
-    {
-       if
+function pacmanAndGhost(objRef, objRef2){
+    if
     (objRef.current.y + objRef.current.sizeHeight > objRef2.current.y 
      &&
      objRef.current.y < objRef2.current.sizeHeight + objRef2.current.y   
@@ -79,25 +99,36 @@ function pacmanAndGhostPosition(objRef, objRef2){
     objRef.current.x + objRef.current.sizeWidth > objRef2.current.x
     && 
     objRef.current.x < objRef2.current.x + objRef2.current.sizeWidth 
-        
-       ){ 
-        livesCounter.current -= 1
-        pacmanRef.current.x = SCREEN_WIDTH * (5/20)
-        pacmanRef.current.y = SCREEN_HEIGHT * (5/20)
-        
-        if(livesCounter.current === 0){
-            console.log('game over')
-        }
-        // console.log('what a butt') 
-        // contextRef.current.beginPath();
-        // contextRef.current.rect(objRef2.current[key].x, objRef2.current[key].y, (objRef2.current[key].width), (objRef2.current[key].height));;
-        // contextRef.current.fillStyle = "white";
-        //  contextRef.current.fill();
 
-       }
+       ){if(livesCounter.current === 0){
+        
     }
+   
+    if(!ghostEatAbility.current)
+   { 
+    setLifeLost(!lifeLost)  
+    livesCounter.current -= 1
     
+    objRef.current.x = SCREEN_WIDTH * (5/20)
+    objRef.current.y = SCREEN_HEIGHT * (3/20)
+    
+   
+    // console.log('what a butt') 
+    // contextRef.current.beginPath();
+    // contextRef.current.rect(objRef2.current[key].x, objRef2.current[key].y, (objRef2.current[key].width), (objRef2.current[key].height));;
+    // contextRef.current.fillStyle = "white";
+    //  contextRef.current.fill()
+   }
+      if (ghostEatAbility){
+        objRef2.current.x = SCREEN_WIDTH * (13/20)
+        objRef2.current.y = SCREEN_HEIGHT * (5/20)
+      }     
+       }
+       else {
+       
+       }
 }
+
 
 
 
@@ -112,17 +143,18 @@ function findDirectionalInteger(directionalArray){
 }
 
 
-
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
 
 
 function drawImage(){
     let object = new Image ()
-     object.src = ghost
+     object.src = ghostpic
      contextRef.current.drawImage(object, ghostRef.current.x, ghostRef.current.y, ghostRef.current.sizeWidth, ghostRef.current.sizeHeight)
      contextRef.current.strokeStyle ='red';
         contextRef.current.strokeRect(ghostRef.current.x,ghostRef.current.y,ghostRef.current.sizeWidth,ghostRef.current.sizeHeight)
  }
-
 
  function handleDirection(objRef){
     

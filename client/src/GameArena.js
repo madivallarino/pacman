@@ -18,7 +18,7 @@ const GameArena = () => {
         canvas.style.position = "absolute"
         canvas.style.left = `${window.innerWidth*(6/20)}px`
         canvas.style.top = `${window.innerHeight*(3/20)}px`
-        canvas.style['z.index'] = 0;
+        canvas.style['z.index'] = 2;
         const context = canvas.getContext("2d");
         context.scale(2,2)
         contextRef.current = context;
@@ -29,6 +29,7 @@ const GameArena = () => {
 
     return (
         <div>
+       
         <canvas id="canvas"
         ref={canvasRef}
        
