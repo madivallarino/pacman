@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import GameBoard from './GameBoard';
 import pac1 from './pac1.png'
 
-const PlayerCanvas = ({wallRef, pacmanRef, rectangleWidth, rectangleHeight }) => {
+const PlayerCanvas = ({wallRef, pacmanRef, rectangleWidth, rectangleHeight, notAWallRef }) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const movingRef = useRef('')
-//    console.log(wallRef.current)
+
    
 
     const SCREEN_WIDTH = window.innerWidth
@@ -14,11 +14,11 @@ const PlayerCanvas = ({wallRef, pacmanRef, rectangleWidth, rectangleHeight }) =>
     
 
     const pacmanx = {
-        x: SCREEN_WIDTH * (5/20),
-        y: SCREEN_HEIGHT * (3/20), 
-        sizeWidth: (rectangleWidth * (8/20)),
-        sizeHeight: (rectangleHeight * (8/20)) ,
-        speed: 5,
+        x: SCREEN_WIDTH * (.9/20),
+        y: SCREEN_HEIGHT * (.7/20), 
+        sizeWidth: (rectangleWidth * (14/20)),
+        sizeHeight: (rectangleHeight * (14/20)) ,
+        speed: 2.5,
         dx: 0,
         dy: 0,
     }
@@ -40,7 +40,7 @@ const PlayerCanvas = ({wallRef, pacmanRef, rectangleWidth, rectangleHeight }) =>
         canvas.style.top = `${window.innerHeight*(3/20)}px`
         // canvas.style.border = '20px solid yellow'
         
-        canvas.style['z.index'] = 10;
+        canvas.style['z.index'] = 15;
         const context = canvas.getContext("2d");
         context.scale(2,2)
         contextRef.current = context;

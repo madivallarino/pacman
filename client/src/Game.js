@@ -2,33 +2,54 @@ import React, { useRef, useState } from 'react';
 import GameArena from './GameArena';
 import PlayerCanvas from './PlayerCanvas';
 import GameBoard from './GameBoard'
-import GhostCanvas from './GhostCanvas'
-import GhostComponent from './Ghost';
+import GhostFactory from './GhostFactory'
 import ScoreBoard from './ScoreBoard';
-import Lives from './Lives';
+// import Lives from './Lives';
 import Dots from './Dots'
 
-const Game = ({lifeLost, setLifeLost}) => {
+const Game = () => {
    
     const wallRef = useRef({})
     const notAWallRef = useRef({})
     const pacmanRef = useRef()
     const livesCounter = useRef(3)
-   const ghostEatAbility = useRef(false)
+    const ghostEatAbility = useRef(false)
     const ghostCounter = useRef(3)
-    
+    const [lifeLost, setLifeLost] = useState(false)
 
     const gameArea = [
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,2,0,0,0,0,0,0,0,0,0,0,0,2,1],
-        [1,0,1,1,0,1,1,1,0,1,1,1,1,0,1],
-        [1,0,1,1,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,1,1,0,1,1,1,0,1,1,1,1,0,1],
-        [1,0,0,1,0,1,1,1,0,1,1,1,1,0,1],
-        [1,0,0,0,0,1,1,1,0,1,1,0,0,0,1],
-        [1,2,0,0,0,0,0,0,0,0,0,0,0,2,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0],
+        [0,2,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,2,0],
+        [0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0],
+        [0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,1,0,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
+        [0,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0],
+        [0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0],
+        [0,2,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,2,0],
+        [0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,0,0,0],
+        [0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0,1,0,0,0],
+        [0,1,1,1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,0],
+        [0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0],
+        [0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                 ]
 
 const SCREEN_WIDTH = window.innerWidth
@@ -47,9 +68,10 @@ const rectangleHeight = SCREEN_HEIGHT/(gameBoardHeight)
             livesCounter={livesCounter}
             rectangleWidth={rectangleWidth}
             rectangleHeight={rectangleHeight}
-            lifeLost={lifeLost}
+            SCREEN_WIDTH={SCREEN_WIDTH}
+            SCREEN_HEIGHT={SCREEN_HEIGHT}
             />
-            <Lives rectangleHeight={rectangleHeight} rectangleWidth={rectangleWidth}/>
+            {/* <Lives rectangleHeight={rectangleHeight} rectangleWidth={rectangleWidth}/> */}
             <GameArena /> 
             <GameBoard wallRef={wallRef} 
             notAWallRef={notAWallRef}
@@ -57,19 +79,23 @@ const rectangleHeight = SCREEN_HEIGHT/(gameBoardHeight)
             gameBoardHeight={gameBoardHeight}
             gameBoardWidth={gameBoardWidth}
             />
-            <Dots wallRef={wallRef} notAWallRef={notAWallRef} pacmanRef={pacmanRef}/> 
-           
-            <GhostCanvas 
-            wallRef={wallRef} 
+
+            
+            <Dots wallRef={wallRef} 
+            notAWallRef={notAWallRef} 
             pacmanRef={pacmanRef}
-            livesCounter={livesCounter}
-            ghostEatAbility={ghostEatAbility}
-            ghostCounter={ghostCounter}
-            rectangleHeight={rectangleHeight} 
-            rectangleWidth={rectangleWidth}
-            lifeLost={lifeLost}
-            setLifeLost={setLifeLost}
+            /> 
+
+            <GhostFactory 
+                rectangleHeight={rectangleHeight}
+                rectangleWidth={rectangleWidth}
+                livesCounter={livesCounter}
+                SCREEN_HEIGHT={SCREEN_HEIGHT}
+                SCREEN_WIDTH={SCREEN_WIDTH}
+                pacmanRef={pacmanRef}
+                wallRef={wallRef}
             />
+           
             <PlayerCanvas wallRef={wallRef} 
             notAWallRef={notAWallRef}
             pacmanRef={pacmanRef}

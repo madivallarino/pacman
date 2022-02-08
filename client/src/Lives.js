@@ -1,4 +1,4 @@
-
+import ScoreBoard from "./ScoreBoard"
 function Lives({rectangleHeight, rectangleWidth}){
 
     class Lives {
@@ -19,15 +19,21 @@ const twoLife = new Lives((SCREEN_WIDTH * (2/20)), (SCREEN_HEIGHT * (19/20)), (r
 const threeLife = new Lives((SCREEN_WIDTH * (3/20)), (SCREEN_HEIGHT * (19/20)), (rectangleWidth * (8/20)), (rectangleHeight * (8/20)))
 
 const allLives = [oneLife, twoLife, threeLife]
-
+const allTheLives = allLives.map((life)=> 
+{<ScoreBoard life={life}
+    rectangleHeight={rectangleHeight}
+    rectangleWidth={rectangleWidth}
+    
+/>
+})
 
 
 return (
 
 
-    <div>
-
-    </div>
+    <>
+    {allTheLives}
+    </>
 )
 }
 

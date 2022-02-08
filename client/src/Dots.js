@@ -22,7 +22,7 @@ const Dots = ({ wallRef, notAWallRef, pacmanRef }) => {
         canvas.style.position = "absolute"
         canvas.style.left = `${SCREEN_WIDTH*(6/20)}px`
         canvas.style.top = `${SCREEN_HEIGHT*(3/20)}px`
-        canvas.style['z.index'] = 5;
+        canvas.style['z.index'] = 10;
         const context = canvas.getContext("2d");
         context.scale(2,2)
         contextRef.current = context;

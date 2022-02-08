@@ -1,5 +1,6 @@
 
-
+import yellowDot from './yellowDot.png'
+import pinkDot from './pinkDot.png'
 import React, { useEffect, useState, useRef} from 'react';
 
 const GameBoard = ({ wallRef, notAWallRef, gameBoardHeight, gameBoardWidth, gameArea}) => {
@@ -19,7 +20,7 @@ const GameBoard = ({ wallRef, notAWallRef, gameBoardHeight, gameBoardWidth, game
         canvas.style.position = "absolute"
         canvas.style.left = `${SCREEN_WIDTH*(6/20)}px`
         canvas.style.top = `${SCREEN_HEIGHT*(3/20)}px`
-        canvas.style['z.index'] = 3;
+        canvas.style['z.index'] = 5;
         const context = canvas.getContext("2d");
         context.scale(2,2)
         contextRef.current = context;
@@ -89,17 +90,17 @@ const GameBoard = ({ wallRef, notAWallRef, gameBoardHeight, gameBoardWidth, game
         
         for(let num in arrofarr[arr]){ 
             let xStartPosition  = (parseInt(num) / arrofarr[arr].length) * SCREEN_WIDTH
-            if(parseInt(arrofarr[arr][num]) === 0){
+            if(parseInt(arrofarr[arr][num]) === 1){
               ballCounter += 1
-               drawGreenSide(xStartPosition, yStartPosition, "yellow", ballCounter)
+               drawGreenSide(yellowDot, xStartPosition, yStartPosition, "yellow", ballCounter)
               
-             } else if (parseInt(arrofarr[arr][num]) === 1){
+             } else if (parseInt(arrofarr[arr][num]) === 0){
                 wallCounter += 1
                drawBlueSide(xStartPosition, yStartPosition, "black", wallCounter)
           }
           else if (parseInt(arrofarr[arr][num]) === 2){
             ballCounter += 1
-           drawGreenSide(xStartPosition, yStartPosition, "pink", ballCounter)
+           drawGreenSide(pinkDot, xStartPosition, yStartPosition, "purple", ballCounter)
       }
         } 
       }
@@ -107,13 +108,18 @@ const GameBoard = ({ wallRef, notAWallRef, gameBoardHeight, gameBoardWidth, game
 
 
 
+  
 
 
-    function drawGreenSide(x, y, color, counter){
-        contextRef.current.beginPath();
-        contextRef.current.rect(x, y, (SCREEN_WIDTH/(gameBoardWidth)), (SCREEN_HEIGHT/(gameBoardHeight)));;
-        contextRef.current.fillStyle = color;
-         contextRef.current.fill();
+
+
+    function drawGreenSide(dot, x, y, color, counter){
+        // contextRef.current.beginPath();
+        let newImage = new Image ()
+        newImage.src = dot
+        contextRef.current.drawImage(newImage, x, y, (SCREEN_WIDTH/(gameBoardWidth)), (SCREEN_HEIGHT/(gameBoardHeight)));;
+        // contextRef.current.fillStyle = color;
+        //  contextRef.current.fill();
          notAWallRef.current[`ball${counter}`] = {}
          notAWallRef.current[`ball${counter}`].x = x;
          notAWallRef.current[`ball${counter}`].y = y;

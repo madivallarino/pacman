@@ -5,7 +5,7 @@ import './App.css';
 
 function App() {
 
-  const [lifeLost, setLifeLost ] = useState(false)
+  
 
 
 
@@ -14,7 +14,7 @@ function App() {
     <div className="App">
    
     
-    <Game lifeLost={lifeLost} setLifeLost={setLifeLost}/>
+    <Game />
  
     
    
