@@ -1,4 +1,4 @@
-import ScoreBoard from "./ScoreBoard"
+import ScoreBoard from "./LivesBoard"
 function Lives({rectangleHeight, rectangleWidth}){
 
     class Lives {

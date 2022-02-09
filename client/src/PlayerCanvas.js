@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
+
 import GameBoard from './GameBoard';
-import pac1 from './pac1.png'
+import pac1 from './images/pac1.png'
 
 const PlayerCanvas = ({wallRef, pacmanRef, rectangleWidth, rectangleHeight, notAWallRef }) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const movingRef = useRef('')
-
-   
-
+    
+  
     const SCREEN_WIDTH = window.innerWidth
     const SCREEN_HEIGHT = window.innerHeight
     
@@ -16,9 +16,9 @@ const PlayerCanvas = ({wallRef, pacmanRef, rectangleWidth, rectangleHeight, notA
     const pacmanx = {
         x: SCREEN_WIDTH * (.9/20),
         y: SCREEN_HEIGHT * (.7/20), 
-        sizeWidth: (rectangleWidth * (14/20)),
-        sizeHeight: (rectangleHeight * (14/20)) ,
-        speed: 2.5,
+        sizeWidth: (rectangleWidth * (16.5/20)),
+        sizeHeight: (rectangleHeight * (16.5/20)) ,
+        speed: 1.9,
         dx: 0,
         dy: 0,
     }
@@ -170,25 +170,11 @@ function handleWallBoundaries(objRef, objRef2){
     
 }
 
-
-// function handleBallBoundaries(objRef, objRef2){
-//     for(let key in objRef2.current){
-//         if((objRef.current.x ) > (objRef2.current[key].x + objRef2.current[key].width)
-//         ||
-//         ((objRef.current.x + objRef.current.sizeWidth) <  objRef2.current[key].x)
-//         ||
-//         ((objRef.current.y) > objRef2.current[key].y + objRef2.current[key].height)
-//         ||
-//         ((objRef.current.y + objRef.current.sizeHeight) < objRef2.current[key].y)   
-//         )
-//         {
-               
-//         }
+// function walkThroughSide(objRef){
+//     if(objRef.current.x + objRef.current.sizeWidth < 0){
+//         objRef.current.x
 //     }
-    
 // }
-
-
 
 
 
@@ -218,7 +204,7 @@ function boundaries(objRef, i){
         onKeyDown={setDirection}
         tabIndex = "0"
       />
-     
+    
         </div>
     )
     }

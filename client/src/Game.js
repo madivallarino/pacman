@@ -3,7 +3,8 @@ import GameArena from './GameArena';
 import PlayerCanvas from './PlayerCanvas';
 import GameBoard from './GameBoard'
 import GhostFactory from './GhostFactory'
-import ScoreBoard from './ScoreBoard';
+import Scoreboard from './Scoreboard';
+import LivesBoard from './LivesBoard';
 // import Lives from './Lives';
 import Dots from './Dots'
 
@@ -15,8 +16,10 @@ const Game = () => {
     const livesCounter = useRef(3)
     const ghostEatAbility = useRef(false)
     const ghostCounter = useRef(3)
-    const [lifeLost, setLifeLost] = useState(false)
-
+    const actualScore = useRef(0)
+  
+    // const [lifeLost, setLifeLost] = useState(false)
+    
     const gameArea = [
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0],
@@ -64,15 +67,21 @@ const rectangleHeight = SCREEN_HEIGHT/(gameBoardHeight)
 
     return (
         <div>
-            <ScoreBoard 
+
+            {/* <Scoreboard 
+            actualScore={actualScore}
+            scoreBoard={scoreBoard}
+            /> */}
+            <LivesBoard 
             livesCounter={livesCounter}
             rectangleWidth={rectangleWidth}
             rectangleHeight={rectangleHeight}
             SCREEN_WIDTH={SCREEN_WIDTH}
             SCREEN_HEIGHT={SCREEN_HEIGHT}
             />
-            {/* <Lives rectangleHeight={rectangleHeight} rectangleWidth={rectangleWidth}/> */}
+            
             <GameArena /> 
+
             <GameBoard wallRef={wallRef} 
             notAWallRef={notAWallRef}
             gameArea={gameArea}
@@ -84,10 +93,14 @@ const rectangleHeight = SCREEN_HEIGHT/(gameBoardHeight)
             <Dots wallRef={wallRef} 
             notAWallRef={notAWallRef} 
             pacmanRef={pacmanRef}
+            ghostEatAbility={ghostEatAbility}
+            actualScore={actualScore}
+           
             /> 
 
             <GhostFactory 
                 rectangleHeight={rectangleHeight}
+                ghostEatAbility={ghostEatAbility}
                 rectangleWidth={rectangleWidth}
                 livesCounter={livesCounter}
                 SCREEN_HEIGHT={SCREEN_HEIGHT}

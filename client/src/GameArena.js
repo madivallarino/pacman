@@ -13,7 +13,7 @@ const GameArena = () => {
         canvas.width = window.innerWidth * 2;
         canvas.height = window.innerHeight * 2;
         canvas.style.width = `${window.innerWidth*(8/20)}px`;
-        canvas.style.backgroundColor = "red"
+        // canvas.style.backgroundColor = "red"
         canvas.style.height = `${window.innerHeight*(13/20)}px`;
         canvas.style.position = "absolute"
         canvas.style.left = `${window.innerWidth*(6/20)}px`

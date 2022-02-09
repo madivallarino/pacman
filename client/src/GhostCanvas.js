@@ -41,7 +41,7 @@ ghostRef.current = ghost
         canvas.style.top = `${window.innerHeight*(3/20)}px`
         // canvas.style.border = '20px solid yellow'
         
-        canvas.style['z.index'] = 7;
+        canvas.style['z.index'] = 10;
         const context = canvas.getContext("2d");
         context.scale(2,2)
         contextRef.current = context;
@@ -56,12 +56,15 @@ function update(){
     pacmanAndGhost(pacmanRef, ghostRef)
     handleDirection(ghostRef)
     handleBoundaries(ghostRef)
+    
     requestAnimationFrame(update)
    
 }
 
 
+
 function pacmanAndGhost(objRef, objRef2){
+    
     if
     (objRef.current.y + objRef.current.sizeHeight > objRef2.current.y 
      &&
@@ -75,7 +78,7 @@ function pacmanAndGhost(objRef, objRef2){
         
     }
    
-    if(!ghostEatAbility)
+    if(!ghostEatAbility.current)
    { 
      
     livesCounter.current -= 1
@@ -92,7 +95,7 @@ function pacmanAndGhost(objRef, objRef2){
     // contextRef.current.fillStyle = "white";
     //  contextRef.current.fill()
    }
-      if (ghostEatAbility){
+      if (ghostEatAbility.current){
         objRef2.current.x = SCREEN_WIDTH * (11/20)
         objRef2.current.y = SCREEN_HEIGHT * (7/20)
 
@@ -126,11 +129,20 @@ function getRandomInt(max) {
 
 
 function drawImage(){
-    let object = new Image ()
-     object.src = ghostRef.current.image
+    if (ghostEatAbility.current){
+        let object = new Image ()
+     object.src = ghostRef.current.scaredimage
      contextRef.current.drawImage(object, ghostRef.current.x, ghostRef.current.y, ghostRef.current.sizeWidth, ghostRef.current.sizeHeight)
      contextRef.current.strokeStyle ='red';
         contextRef.current.strokeRect(ghostRef.current.x,ghostRef.current.y,ghostRef.current.sizeWidth,ghostRef.current.sizeHeight)
+    } else {
+        let object = new Image ()
+        object.src = ghostRef.current.image
+        contextRef.current.drawImage(object, ghostRef.current.x, ghostRef.current.y, ghostRef.current.sizeWidth, ghostRef.current.sizeHeight)
+        contextRef.current.strokeStyle ='red';
+           contextRef.current.strokeRect(ghostRef.current.x,ghostRef.current.y,ghostRef.current.sizeWidth,ghostRef.current.sizeHeight)
+    }
+    
  }
 
  function handleDirection(objRef){
