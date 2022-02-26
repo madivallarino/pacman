@@ -3,9 +3,7 @@ import GameArena from './GameArena';
 import PlayerCanvas from './PlayerCanvas';
 import GameBoard from './GameBoard'
 import GhostFactory from './GhostFactory'
-import Scoreboard from './Scoreboard';
 import LivesBoard from './LivesBoard';
-// import Lives from './Lives';
 import Dots from './Dots'
 
 const Game = () => {
@@ -68,10 +66,7 @@ const rectangleHeight = SCREEN_HEIGHT/(gameBoardHeight)
     return (
         <div>
 
-            {/* <Scoreboard 
-            actualScore={actualScore}
-            scoreBoard={scoreBoard}
-            /> */}
+            
             <LivesBoard 
             livesCounter={livesCounter}
             rectangleWidth={rectangleWidth}

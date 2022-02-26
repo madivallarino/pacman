@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-
 import GameBoard from './GameBoard';
 import pac1 from './images/pac1.png'
 
