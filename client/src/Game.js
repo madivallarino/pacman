@@ -14,7 +14,7 @@ const Game = () => {
     const livesCounter = useRef(3)
     const ghostEatAbility = useRef(false)
     const ghostCounter = useRef(3)
-    const actualScore = useRef(0)
+    // const actualScore = useRef(0)
   
     // const [lifeLost, setLifeLost] = useState(false)
     
@@ -89,7 +89,7 @@ const rectangleHeight = SCREEN_HEIGHT/(gameBoardHeight)
             notAWallRef={notAWallRef} 
             pacmanRef={pacmanRef}
             ghostEatAbility={ghostEatAbility}
-            actualScore={actualScore}
+            // actualScore={actualScore}
            
             /> 
 

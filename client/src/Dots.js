@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo} from 'react';
 import yellowDot from './images/yellowDot.png'
 
 
-const Dots = ({ wallRef, notAWallRef, pacmanRef, ghostEatAbility, actualScore }) => {
+const Dots = ({ wallRef, notAWallRef, pacmanRef, ghostEatAbility }) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const whiteBlocks = useRef({})
@@ -72,8 +72,8 @@ function handleBallBoundaries(objRef, objRef2){
          makeWhiteBlockHash(objRef2.current[key].x,objRef2.current[key].y, arrayOfWhiteXY)
         speedBallChecker(objRef2.current[key])
          winGame(objRef2)
-         actualScore.current = arrayOfWhiteXY.current.length * 10
-        setScoreBoard(scoreBoard => !scoreBoard)
+        //  actualScore.current = arrayOfWhiteXY.current.length * 10
+        // setScoreBoard(scoreBoard => !scoreBoard)
        }
     }
     
@@ -131,7 +131,7 @@ function makeWhiteBlockHash(x, y, arrayXY){
        
       />
 
-        SCOREBOARD: {actualScore.current}
+        
         </div>
     )
 }

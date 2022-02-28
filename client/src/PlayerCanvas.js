@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import GameBoard from './GameBoard';
 import pac1 from './images/pac1.png'
+import pac1down from './images/pac1down.png'
+import pac1left from './images/pac1left.png'
+import pac1up from './images/pac1up.png'
 
 const PlayerCanvas = ({wallRef, pacmanRef, rectangleWidth, rectangleHeight, notAWallRef }) => {
     const canvasRef = useRef(null)
@@ -61,7 +64,16 @@ function update(){
 
 function drawImage(){
     let object = new Image ()
-     object.src = pac1
+    if(movingRef.current === 'right'){
+        object.src = pac1
+    } else if (movingRef.current === 'left'){
+        object.src = pac1left
+    } else if (movingRef.current === 'up'){
+        object.src = pac1up
+    } else if (movingRef.current === 'down'){
+        object.src = pac1down
+    }
+    
      contextRef.current.drawImage(object, pacmanRef.current.x, pacmanRef.current.y, pacmanRef.current.sizeWidth, pacmanRef.current.sizeHeight)
      contextRef.current.strokeStyle ='red';
         contextRef.current.strokeRect(pacmanRef.current.x,pacmanRef.current.y,pacmanRef.current.sizeWidth,pacmanRef.current.sizeHeight)
